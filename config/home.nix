@@ -19,6 +19,7 @@ with pkgs.lib;
     killall
     neovim
     pv
+    qtstyleplugin-kvantum
     unzip
     zip
   ];
