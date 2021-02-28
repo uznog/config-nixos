@@ -47,18 +47,25 @@ in
   users.users.${config.settings.username} = {
     isNormalUser = true;
     home = "/home/${config.settings.username}";
-    description = "Konrad Baran";
-    extraGroups = [ "wheel" "networkmanager" ];
+    description = "${config.settings.name}";
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
     uid = 1000;
     shell = pkgs.bash;
   };
 
   environment.systemPackages = with pkgs; [
     wget
-    vim
+    neovim
     git
   ];
-  
+
+  environment.loginShellInit = ''
+	if [ -e $HOME/.profile ]
+	then
+		. $HOME/.profile
+	fi
+  '';
+
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
   ];
