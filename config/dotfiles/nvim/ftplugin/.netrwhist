@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/kbaran/src/repos/void-packages/srcpkgs/neovim-nightly'
+let g:netrw_dirhist_6='/home/kbaran/.go/src/personal/zbrodniarzBot/files'
+let g:netrw_dirhist_5='/home/kbaran/src/snowdog/ansible/playbooks/tower-anonymizer/roles/dump_snapshot'
+let g:netrw_dirhist_4='/home/kbaran/src/snowdog/ansible/playbooks/tower-anonymizer/roles/anonymize/tasks'
+let g:netrw_dirhist_3='/home/kbaran/.go/src/snowdog/snowmine-alerts/app'
+let g:netrw_dirhist_2='/home/kbaran/.go/src/snowdog/snowmine-alerts'
+let g:netrw_dirhist_1='/home/kbaran/src/snowdog/projects/indigo/services/api-gateway/src'
+let g:netrw_dirhist_0='/home/kbaran/src/snowdog/projects/indigo/k8s/kubernetes-deployment/frontend/charts/frontend-main/templates'
+let g:netrw_dirhist_9='/home/kbaran/src/repos/personal/kbaranpl_config'
+let g:netrw_dirhist_8='/home/kbaran/src/snowdog/nas/Accessibility'
