@@ -9,7 +9,7 @@
 
   settings = {
     username = "kbaran";
-    fontName = "SourceCodePro";
+    fontName = "SauceCodePro Nerd Font";
     fontSize = 12;
     xkbFile = "none";
     terminal = "alacritty";
