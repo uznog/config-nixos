@@ -19,13 +19,11 @@ scrolling:
 
 font:
   normal:
-    family: Source Code Pro
+    family: SauceCodePro Nerd Font
     style: Regular
   bold:
-    family: Source Code Pro
     style: Bold
   italic:
-    family: Source Code Pro
     style: Italic
   size: 10
   offset:
