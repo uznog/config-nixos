@@ -19,11 +19,9 @@ with pkgs.lib;
     killall
     neovim
     pv
-    qtstyleplugin-kvantum
     unzip
     zip
   ];
-
 
   xdg.configFile."alacritty/alacritty.yml".source = ./dotfiles/alacritty.yml;
 }
