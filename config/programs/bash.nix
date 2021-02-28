@@ -16,7 +16,7 @@ with pkgs.lib;
       "gs" = "git status";
       "gd" = "git diff";
       "gl" = "git log --pretty=oneline";
-      "hm" = "home-manager -f $HOME/etc/config/config/home.nix";
+      "hm" = "home-manager -f $HOME/etc/config-nixos/config/home.nix";
     };
     initExtra = ''
       hg() { history | grep "$1"; }
