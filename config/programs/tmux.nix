@@ -2,6 +2,9 @@
 
 with pkgs.lib;
 
+let 
+  unstable = import <nixos-unstable> {};
+in
 {
 programs.tmux = {
     enable = true;
@@ -15,7 +18,7 @@ programs.tmux = {
       tmuxPlugins.sensible
       tmuxPlugins.vim-tmux-navigator
       tmuxPlugins.yank
-      #unstable.tmuxPlugins.nord
+      unstable.tmuxPlugins.nord
     ];
     extraConfig = ''
       # Bindings
