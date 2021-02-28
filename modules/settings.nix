@@ -22,7 +22,7 @@ with lib;
         type = with types; uniq str;
       };
       fontName = mkOption {
-        default = "Inconsolata";
+        default = "SauceCodePro Nerd Font";
         type = with types; uniq str;
       };
       fontSize = mkOption {
