@@ -46,7 +46,13 @@ with pkgs.lib;
         fi
     }
     bind '"\C-o":"lfcd\C-m"'
-
+    LF_ICONS=$(sed ~/.config/diricons \
+          -e '/^[ \t]*#/d'       \
+          -e '/^[ \t]*$/d'       \
+          -e 's/[ \t]\+/=/g'     \
+          -e 's/$/ /')
+    LF_ICONS=''${LF_ICONS//$'\n'/:}
+    export LF_ICONS
     '';
     sessionVariables = {
       EDITOR = "nvim";
