@@ -156,9 +156,9 @@ with pkgs.lib;
       '';
       rename = ''&{{
           if [ -e "$*" ]; then
-                  lf -remote "send $id echo file exists"
+              lf -remote "send $id echo file exists"
           else
-                  mv "$f" "$*"
+              mv "$f" "$*"
           fi
         }}
       '';
@@ -219,12 +219,13 @@ with pkgs.lib;
       L = "$tmux next-window";
       H = "$tmux previous-window";
       _ = ''&printf "%s" "$fx" | sed 's|.*/||g' | xclip -selection clipboard'';
-      a = "$lf -remote 'send $id push :rename<space>\${f##*/}'";
-      m = "push :makedir<space>";
+      A = ''$name="''${f##*/}"; lf -remote "send ''${id} push \:rename<space>''${name%.*}"'';
+      a = ''$lf -remote "send $id push \:rename<space>''${f##*/}"'';
+      R = "bulk_rename";
+      m = "push \:makedir<space>";
       u = "disk_usage";
       U = "file_usage";
       C = "unselect";
-      A = "bulk-rename";
       "<enter>" = "shell";
       "<c-space>" = "push :glob-select<space>";
       "<c-y>" = "up";
