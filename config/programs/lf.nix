@@ -11,6 +11,8 @@ with pkgs.lib;
     mediainfo
   ];
 
+  xdg.configFile."diricons".source = ../dotfiles/lf-icons;
+
   programs.lf = {
     enable = true;
     commands = {
@@ -204,7 +206,6 @@ with pkgs.lib;
       gc = "cd ~/.config";
       gf = "cd ~/usr/downloads_firefox";
       gt = "cd ~/usr/downloads_tox";
-      gr = "cd ~/usr/downloads_rambox";
       gp = "cd &xclip -o -selection clipboard";
       d = null;
       dd = "cut";
@@ -237,7 +238,6 @@ with pkgs.lib;
       source = ../dotfiles/lf-previewer.sh;
     };
     settings = {
-      color256 = true;
       hidden = true;
       icons = true;
       ifs = "\\n";

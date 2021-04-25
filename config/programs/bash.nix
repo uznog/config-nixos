@@ -8,15 +8,15 @@ with pkgs.lib;
     shellAliases = {
       "ll" = "ls -al";
       "ns" = "nix-shell --command bash";
-      "vim" = "nvim";
+      "hm" = "home-manager -f $HOME/etc/config-nixos/config/home.nix";
+      "nr" = "sudo nixos-rebuild -I nixos-config=$HOME/etc/config-nixos/nixos/configuration.nix";
+      "gl" = "git log --oneline --graph";
       "ga" = "git add";
       "gc" = "git commit -m";
       "gp" = "git push";
       "gm" = "git merge";
       "gs" = "git status";
       "gd" = "git diff";
-      "gl" = "git log --pretty=oneline";
-      "hm" = "home-manager -f $HOME/etc/config-nixos/config/home.nix";
     };
     initExtra = ''
       hg() { history | grep "$1"; }
@@ -53,6 +53,7 @@ with pkgs.lib;
           -e 's/$/ /')
     LF_ICONS=''${LF_ICONS//$'\n'/:}
     export LF_ICONS
+    . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
     '';
     sessionVariables = {
       EDITOR = "nvim";

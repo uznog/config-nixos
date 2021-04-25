@@ -14,7 +14,10 @@ with pkgs.lib;
       githubSupport = true;
     };
     config = ../dotfiles/polybar.conf;
-    script = "polybar top &";
+    script = ''
+      polybar xps &
+      polybar benq &
+    '';
   };
 
 }

@@ -1,4 +1,4 @@
-{config, pkgs, lib, ...}:
+{ config, pkgs, lib, ... }:
 
 with lib;
 
@@ -28,6 +28,10 @@ with lib;
       fontSize = mkOption {
         default = 12;
         type = types.int;
+      };
+      kbLayout = mkOption {
+        default = "pl";
+        type = types.str;
       };
       xkbFile = mkOption {
         default = "none";

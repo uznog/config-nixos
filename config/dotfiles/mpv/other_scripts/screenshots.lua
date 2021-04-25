@@ -1,0 +1,7 @@
+local utils = require("mp.utils")
+local basedir = mp.get_property("options/screenshot-directory")
+mp.register_event("file-loaded", function()
+    local title = mp.get_property("media-title")
+    local dir = utils.join_path(basedir, title)
+    mp.set_property("options/screenshot-directory", dir)
+end)

@@ -2,6 +2,7 @@
 
 let
   mod = "Mod4";
+  alt = "Mod1";
 in
 with pkgs.lib;
 {
@@ -24,8 +25,13 @@ with pkgs.lib;
       };
       keybindings = mkOptionDefault(
         {
-          "${mod}+space" = "exec ${pkgs.rofi}/bin/rofi -show run";
+          "${mod}+space" = "exec rofi -show run -show-icons";
+          "${mod}+Ctrl+space" = "exec rofi -show ssh -show-icons";
+          "${mod}+Shift+space" = "exec rofi -show combi -show-icons";
+          "${alt}+Tab" = "exec rofi -show window -show-icons";
+          "${mod}+p" = "exec /home/${config.settings.username}/bin/powermenu";
           "${mod}+Return" = "exec ${config.settings.terminal}";
+          "${mod}+F1" = ''exec nvidia-offload mpv --force-window=immediate --window-scale=0.5 "$(xclip -o)"'';
           "${mod}+q" = "kill";
           "${mod}+Shift+q" = "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
           "${mod}+Control+q" = "restart";
@@ -46,9 +52,10 @@ with pkgs.lib;
     };
     extraConfig = ''
       focus_wrapping no
-      exec_always "if [[ -e $HOME/.background-image ]]; then feh --bg-scale $HOME/.background-image ; fi"
+      exec_always "if [[ -e $HOME/.background-image ]]; then feh --bg-scale $HOME/.background-image; fi"
+      exec_always "autorandr -c"
+      bindsym --release Mod4+Shift+Z exec "import png:- | tee /home/${config.settings.username}/usr/screenshots/screenshot_$(date +%F_%T).png | xclip -selection clipboard -t image/png"
+      for_window [class="mpv"] floating enable
     '';
   };
-
-  #xdg.configFile."i3status/config".source = ./dotfiles/i3status.conf;
 }

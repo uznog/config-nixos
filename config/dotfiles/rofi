@@ -1,2 +1,3 @@
 rofi.font: SauceCodePro Nerd Font 12
 rofi.theme: nord
+rofi.terminal: alacritty

@@ -5,7 +5,7 @@ add_newline = false
 disabled = false
 
 [directory]
-format = "[$path]($style)[$read_only]($read_only_style) "
+format = " [$path]($style)[$read_only]($read_only_style) "
 
 [git_status]
 ahead = "⇡${count}"
@@ -14,9 +14,9 @@ behind = "⇣${count}"
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character]                            # The name of the module we are configuring is "character"
-success_symbol = "[\\$](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
-error_symbol = "[\\$](bold red)"
-vicmd_symbol = "[V](bold green) "
+success_symbol = " [\\$](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = " [\\$](bold red)"
+vicmd_symbol = " [V](bold green) "
 
 # Disable the package module, hiding it from the prompt completely
 [package]
