@@ -81,7 +81,12 @@ in
 
     blueman.enable = true;
 
-    dbus.packages = [ pkgs.strongswan ];
+    strongswan = {
+      enable = true;
+      secrets = [
+        "ipsec.d/ipsec.nm-l2tp.secrets"
+      ];
+    };
 
     dnsmasq = {
       enable = true;
@@ -98,6 +103,7 @@ in
 
       libinput = {
         enable = true;
+        disableWhileTyping = true;
       };
 
       layout = "pl"; 
@@ -109,6 +115,13 @@ in
 
       displayManager = {
         defaultSession = "none+i3";
+        gdm = {
+          enable = true;
+        };
+      };
+
+      windowManager.bspwm = {
+        enable = false;
       };
 
       windowManager.i3 = {
@@ -132,10 +145,13 @@ in
     shell = pkgs.bash;
   };
 
+  users.users.nixos.initialPassword = "nixos";
+
   environment.systemPackages = with pkgs; [
     wget
     neovim
     git
+    xdg_utils
   ];
 
   environment.loginShellInit = ''

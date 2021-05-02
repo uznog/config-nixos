@@ -9,6 +9,8 @@ with pkgs.lib;
       vim-nix
       auto-pairs
       vim-surround
+      vim-yaml
+      nerdcommenter
       {
         plugin = (import <nixos-unstable> {}).vimPlugins.vim-hexokinase; 
         config = ''
@@ -16,7 +18,6 @@ with pkgs.lib;
           set termguicolors
         '';
       }
-      nerdcommenter
       { 
         plugin = nord-vim;
         config = "colorscheme nord";
@@ -59,8 +60,8 @@ with pkgs.lib;
       set signcolumn=yes
       set expandtab
       set tabstop=4
-      set softtabstop=4
-      set shiftwidth=4
+      set softtabstop=2
+      set shiftwidth=2
       set nu
       set nowrap
       set fillchars+=vert:\ 

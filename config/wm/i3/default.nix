@@ -7,7 +7,7 @@ in
 with pkgs.lib;
 {
   imports = [
-    ../../modules/settings.nix
+    ../../../modules/settings.nix
   ];
 
   xsession.windowManager.i3 = {
@@ -25,10 +25,13 @@ with pkgs.lib;
       };
       keybindings = mkOptionDefault(
         {
-          "${mod}+space" = "exec rofi -show run -show-icons";
+          "${mod}+space" = "exec rofi -show combi -show-icons";
           "${mod}+Ctrl+space" = "exec rofi -show ssh -show-icons";
-          "${mod}+Shift+space" = "exec rofi -show combi -show-icons";
           "${alt}+Tab" = "exec rofi -show window -show-icons";
+          "XF86AudioRaiseVolume" = "exec /home/${config.settings.username}/bin/volume.sh 2dB+";
+          "XF86AudioLowerVolume" = "exec /home/${config.settings.username}/bin/volume.sh 2dB-";
+          "XF86MonBrightnessUp" = "exec sudo xbacklight -inc 5";
+          "XF86MonBrightnessDown" = "exec sudo xbacklight -dec 5";
           "${mod}+p" = "exec /home/${config.settings.username}/bin/powermenu";
           "${mod}+Return" = "exec ${config.settings.terminal}";
           "${mod}+F1" = ''exec nvidia-offload mpv --force-window=immediate --window-scale=0.5 "$(xclip -o)"'';
@@ -56,6 +59,7 @@ with pkgs.lib;
       exec_always "autorandr -c"
       bindsym --release Mod4+Shift+Z exec "import png:- | tee /home/${config.settings.username}/usr/screenshots/screenshot_$(date +%F_%T).png | xclip -selection clipboard -t image/png"
       for_window [class="mpv"] floating enable
+      for_window [class="firefox"] gaps left 0 right 0 bottom 0
     '';
   };
 }

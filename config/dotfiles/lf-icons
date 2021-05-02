@@ -10,13 +10,13 @@ or 
 ex 
 
 ## Misc
-.config          
+.config        
 
 ## Full Matches
-README         
+README.md      
 LICENSE        
 .DS_Store      
-.Dockerfile    
+Dockerfile     
 CMakeLists.txt 
 .gitlab-ci.yml 
 

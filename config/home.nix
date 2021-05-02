@@ -10,17 +10,22 @@ with pkgs.lib;
 {
   imports = [
     ../modules/settings.nix
+    ./dev
+    ./wm
     ./programs
-    ./i3
+    ./services
   ];
 
   nixpkgs.config = import ../nixpkgs.nix;
 
   home = {
     packages = with pkgs; [
+      (import <nixos-unstable> {config.allowUnfree = true;})._1password
+      acpilight
       alacritty
       chromium
       discord
+      docker-compose
       dunst
       feh
       ffmpeg

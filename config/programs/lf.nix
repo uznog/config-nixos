@@ -9,6 +9,7 @@ with pkgs.lib;
     file
     highlight
     mediainfo
+    trash-cli
   ];
 
   xdg.configFile."diricons".source = ../dotfiles/lf-icons;
@@ -98,40 +99,37 @@ with pkgs.lib;
       '';
       open = ''&{{
         case "$f" in
-                *.tar.bz|*.tar.bz2|*.tbz|*.tbz2|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.zip|*.rar|*.iso)
-                        file_dir="$(dirname "$f")"
-                        filename=".$(basename "$f")"
-                        mntdir="$file_dir/$filename-archivemount"
+          *.tar.bz|*.tar.bz2|*.tbz|*.tbz2|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.zip|*.rar|*.iso)
+            file_dir="$(dirname "$f")"
+            filename=".$(basename "$f")"
+            mntdir="$file_dir/$filename-archivemount"
 
-                        if [ ! -d "$mntdir" ]; then
-                                mkdir "$mntdir"
-                                archivemount "$f" "$mntdir"
-                                echo "$mntdir" >> "/tmp/__lf_archivemount_$id"
-                        fi
+            if [ ! -d "$mntdir" ]; then
+              mkdir "$mntdir"
+              archivemount "$f" "$mntdir"
+              echo "$mntdir" >> "/tmp/__lf_archivemount_$id"
+            fi
 
-                        lf -remote "send $id cd \"$mntdir\""
-                        lf -remote "send $id reload"
-                ;;
-                *)
-                        case $(file --mime-type $f -b) in
-                        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.zip|*.rar|*.iso)
-                                mntdir="$f-archivemount"
-
-                                if [ ! -d "$mntdir" ]; then
-                                        mkdir "$mntdir"
-                                        archivemount "$f" "$mntdir"
-                                        echo "$mntdir" >> "/tmp/__lf_archivemount_$id"
-                                fi
-
-                                lf -remote "send $id cd \"$mntdir\""
-                                lf -remote "send $id reload"
-                        ;;
-                        text/*) "$EDITOR" -- $fx;;
-                        image/*) feh $fx;;
-                        application/octet-stream) mpv -- $fx;;
-                        *) rifle -- $fx;;
-                esac
-                ;;
+            lf -remote "send $id cd \"$mntdir\""
+            lf -remote "send $id reload"
+          ;;
+          *)
+            case $(file --mime-type $f -b) in
+            *.tar.bz|*.tar.bz2|*.tbz|*.tbz2|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.zip|*.rar|*.iso)
+              mntdir="$f-archivemount"
+              if [ ! -d "$mntdir" ]; then
+                mkdir "$mntdir"
+                archivemount "$f" "$mntdir"
+                echo "$mntdir" >> "/tmp/__lf_archivemount_$id"
+              fi
+              lf -remote "send $id cd \"$mntdir\""
+              lf -remote "send $id reload"
+            ;;
+            text/*) "$EDITOR" -- $fx;;
+            image/*) feh $fx;;
+            *) xdg-open $fx;;
+          esac
+          ;;
         esac
       }}
       '';
@@ -176,6 +174,7 @@ with pkgs.lib;
     extraConfig = ''
       map - &printf "%s" "$fx" | xclip -selection clipboard
       map _ &printf "%s" "$fx" | sed 's|.*/||g' | xclip -selection clipboard
+      $mkdir -p /home/${config.settings.username}/.trash
     '';
     cmdKeybindings = {
     };
@@ -203,13 +202,14 @@ with pkgs.lib;
       gu = "cd ~/usr";
       gv = "cd ~/var";
       gs = "cd ~/src";
-      gc = "cd ~/.config";
+      gc = "cd ~/etc/config-nixos";
       gf = "cd ~/usr/downloads_firefox";
-      gt = "cd ~/usr/downloads_tox";
+      gt = "cd ~/.trash";
       gp = "cd &xclip -o -selection clipboard";
       d = null;
       dd = "cut";
-      dD = "delete";
+      dD = "$trash --trash-dir=/home/${config.settings.username}/.trash $f";
+      dR = "delete";
       P = "put-progress";
       e = ''$set -f;  ''${EDITOR} $f'';
       w = "$$SHELL";

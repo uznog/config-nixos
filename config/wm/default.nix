@@ -2,7 +2,8 @@
 
 {
   imports = [
-    ./i3.nix
+    ./i3
+    #./bspwm
     ./polybar.nix
     ./rofi.nix
     ./picom.nix

@@ -4,6 +4,7 @@
   imports = [
     ./autorandr.nix
     ./bash.nix
+    ./bat.nix
     ./direnv.nix
     ./dunst.nix
     ./git.nix
