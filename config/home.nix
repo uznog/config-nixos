@@ -6,7 +6,6 @@ let
     chromium --app="https://listen.tidal.com"
   '';
 in
-with pkgs.lib;
 {
   imports = [
     ../modules/settings.nix
@@ -29,7 +28,6 @@ with pkgs.lib;
       dunst
       feh
       ffmpeg
-      ferdi
       firefox
       fzf
       home-manager
@@ -41,7 +39,6 @@ with pkgs.lib;
       pavucontrol
       pv
       rofi
-      signal-desktop
       tidal
       unzip
       xclip
