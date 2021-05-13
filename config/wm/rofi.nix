@@ -1,6 +1,5 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
-with pkgs.lib;
 {
   xdg.configFile."rofi/config".text = ''
     rofi.font: ${config.settings.fontName} 12

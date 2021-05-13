@@ -1,11 +1,6 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
-with pkgs.lib;
 {
-  imports = [
-    ../../modules/settings.nix
-  ];
-
   services.polybar = {
     enable = true;
     package = pkgs.polybar.override {
