@@ -174,7 +174,6 @@ with pkgs.lib;
     extraConfig = ''
       map - &printf "%s" "$fx" | xclip -selection clipboard
       map _ &printf "%s" "$fx" | sed 's|.*/||g' | xclip -selection clipboard
-      $mkdir -p /home/${config.settings.username}/.trash
     '';
     cmdKeybindings = {
     };
@@ -204,11 +203,11 @@ with pkgs.lib;
       gs = "cd ~/src";
       gc = "cd ~/etc/config-nixos";
       gf = "cd ~/usr/downloads_firefox";
-      gt = "cd ~/.trash";
+      gt = "cd ~/.local/share/Trash";
       gp = "cd &xclip -o -selection clipboard";
       d = null;
       dd = "cut";
-      dD = "$trash --trash-dir=/home/${config.settings.username}/.trash $f";
+      dD = "$trash $f";
       dR = "delete";
       P = "put-progress";
       e = ''$set -f;  ''${EDITOR} $f'';
