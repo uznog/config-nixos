@@ -1,10 +1,12 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   imports = [
     ./autorandr.nix
     ./bash.nix
     ./bat.nix
+    ./communication.nix
+    ./devops.nix
     ./direnv.nix
     ./dunst.nix
     ./git.nix
