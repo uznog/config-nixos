@@ -18,9 +18,8 @@ in
   nix.trustedUsers = [ "root" "@wheel" ];
   nixpkgs.config = import ../nixpkgs.nix;
 
-  home-manager.users.${config.settings.username} = import ../config/home.nix;
+  home-manager.users.${config.settings.username} = import ../config/home.nix { inherit pkgs config;};
 
-  # Use the systemd-boot EFI boot loader.
   boot.loader = {
     systemd-boot.enable = true;
     grub = {
@@ -57,7 +56,7 @@ in
 
 
   networking = {
-    hostName = "nixos"; # Define your hostname.
+    hostName = "nixos";
     useDHCP = false;
 
     interfaces.wlp0s20f3.useDHCP = true;
@@ -70,6 +69,11 @@ in
         networkmanager_l2tp
       ];
     };
+  };
+
+  environment.etc = {
+    "${config.settings.username}-hosts".source = ../../config-sensitive/hosts;
+    "NetworkManager/dnsmasq.d/dns.conf".text = "addn-hosts=/etc/${config.settings.username}-hosts";
   };
 
   programs.nm-applet.enable = true;
@@ -86,13 +90,6 @@ in
       secrets = [
         "ipsec.d/ipsec.nm-l2tp.secrets"
       ];
-    };
-
-    dnsmasq = {
-      enable = true;
-      extraConfig = ''
-        addn-hosts=/etc/${config.settings.username}-hosts
-      '';
     };
 
     tlp.enable = true;
@@ -114,10 +111,11 @@ in
       };
 
       displayManager = {
-        defaultSession = "none+i3";
-        gdm = {
+        autoLogin = {
           enable = true;
+          user = "${config.settings.username}";
         };
+        defaultSession = "none+i3";
       };
 
       windowManager.bspwm = {
@@ -131,8 +129,17 @@ in
     };
   };
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.enableOnBoot = false;
+  virtualisation = {
+    docker = {
+      enable = true;
+      enableOnBoot = false;
+    };
+
+    libvirtd = {
+      enable = true;
+      onBoot = "ignore";
+    };
+  };
 
   security.sudo.wheelNeedsPassword = false;
 
@@ -140,7 +147,7 @@ in
     isNormalUser = true;
     home = "/home/${config.settings.username}";
     description = "${config.settings.name}";
-    extraGroups = [ "wheel" "networkmanager" "docker" "audio" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "audio" "libvirtd" ];
     uid = 1000;
     shell = pkgs.bash;
   };
@@ -160,10 +167,6 @@ in
 		. $HOME/.profile
 	fi
   '';
-
-  environment.etc = {
-    "${config.settings.username}-hosts".source = ../../config-sensitive/hosts;
-  };
 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
