@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
 
-with pkgs.lib;
 {
   programs.neovim = {
     enable = true;
@@ -53,7 +52,8 @@ with pkgs.lib;
       map <Leader>y "+y
       nnoremap <leader><Space> @d 
       nmap <leader>e :exit <CR>
-      nmap <leader>w :wg <CR>
+      nmap <leader>w :wq <CR>
+      nnoremap // <esc> :noh<return><esc>
       cmap w!! w !sudo tee %
       set cursorline
       set noshowmode
@@ -66,6 +66,7 @@ with pkgs.lib;
       set nowrap
       set fillchars+=vert:\ 
       let base16colorspace=256  
+      set undofile
     '';
   };
 
