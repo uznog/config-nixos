@@ -12,5 +12,6 @@ with pkgs.lib;
     google-cloud-sdk
     kubernetes-helm
     kubectx
+    kubectl
   ];
 }
