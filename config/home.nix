@@ -3,7 +3,7 @@
 let
   tidal = pkgs.writeScriptBin "tidal" ''
     #!${pkgs.stdenv.shell}
-    chromium --app="https://listen.tidal.com"
+    ${pkgs.chromium}/bin/chromium --app="https://listen.tidal.com"
   '';
 in
 {
@@ -22,7 +22,6 @@ in
       (import <nixos-unstable> {config.allowUnfree = true;})._1password
       acpilight
       alacritty
-      chromium
       discord
       docker-compose
       dunst
@@ -30,7 +29,6 @@ in
       ffmpeg
       firefox
       fzf
-      home-manager
       imagemagick
       jq
       killall
