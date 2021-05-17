@@ -18,7 +18,8 @@ in
   nix.trustedUsers = [ "root" "@wheel" ];
   nixpkgs.config = import ../nixpkgs.nix;
 
-  home-manager.users.${config.settings.username} = import ../config/home.nix { inherit pkgs config;};
+  home-manager.users.${config.settings.username} = import ../config/home.nix { inherit pkgs config; };
+  home-manager.useGlobalPkgs = true;
 
   boot.loader = {
     systemd-boot.enable = true;
@@ -151,8 +152,6 @@ in
     uid = 1000;
     shell = pkgs.bash;
   };
-
-  users.users.nixos.initialPassword = "nixos";
 
   environment.systemPackages = with pkgs; [
     wget
