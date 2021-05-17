@@ -1,19 +1,20 @@
 { config, pkgs, ... }:
 
 {
+
   home.packages = with pkgs; [
-    youtube-dl
     syncplay
+    youtube-dl
   ];
 
   programs.mpv = {
     enable = true;
     package = pkgs.wrapMpv (pkgs.mpv-unwrapped.override {
-      vapoursynthSupport = true; 
+      vapoursynthSupport = true;
       vapoursynth = pkgs.vapoursynth.withPlugins (with pkgs; [
         vapoursynth-mvtools
-      ]);
-    }) { youtubeSupport = true; };
+      ]); 
+    }) { youtubeSupport = false; };
   };
 
   xdg.configFile."mpv".source = ../dotfiles/mpv;
