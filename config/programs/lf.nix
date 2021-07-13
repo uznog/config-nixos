@@ -174,6 +174,7 @@ with pkgs.lib;
     extraConfig = ''
       map - &printf "%s" "$fx" | xclip -selection clipboard
       map _ &printf "%s" "$fx" | sed 's|.*/||g' | xclip -selection clipboard
+      set autoquit
     '';
     cmdKeybindings = {
     };
@@ -211,6 +212,7 @@ with pkgs.lib;
       dR = "delete";
       P = "put-progress";
       e = ''$set -f;  ''${EDITOR} $f'';
+      i = ''$bat --style full $f'';
       w = "$$SHELL";
       x = "$$f";
       X = "!$f";
@@ -233,7 +235,7 @@ with pkgs.lib;
       "<c-n>" = "$tmux new-window lf";
     };
     previewer = {
-      keybinding = "i";
+      keybinding = null;
       source = ../dotfiles/lf-previewer.sh;
     };
     settings = {
