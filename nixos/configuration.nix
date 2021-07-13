@@ -1,24 +1,25 @@
 { config, pkgs, ... }:
 
-let
-  nixos-hardware = builtins.fetchGit {
-    url = "https://github.com/NixOS/nixos-hardware.git";
-    rev = "241d8300b2746c1db715eaf8d64748990cd0bb7a";
-    ref = "master";
-  };
-in
+#let
+  #nixos-hardware = builtins.fetchGit {
+    #url = "https://github.com/NixOS/nixos-hardware.git";
+    #rev = "241d8300b2746c1db715eaf8d64748990cd0bb7a";
+    #ref = "master";
+  #};
+#in
 {
   imports = [
       ../modules/settings.nix
       ./hardware-configuration.nix
-      (import "${nixos-hardware}/dell/xps/15-9500/nvidia")
+      #(import "${nixos-hardware}/dell/xps/15-9500/nvidia")
+      <nixos-hardware/dell/xps/15-9500/nvidia>
       <home-manager/nixos>
   ];
 
   nix.trustedUsers = [ "root" "@wheel" ];
   nixpkgs.config = import ../nixpkgs.nix;
 
-  home-manager.users.${config.settings.username} = import ../config/home.nix { inherit pkgs config; };
+  home-manager.users.${config.settings.username} = import ../config/home.nix;
   home-manager.useGlobalPkgs = true;
 
   boot.loader = {
@@ -40,7 +41,7 @@ in
 
   boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/96b3ec4e-83fb-4bd7-ae3a-bd1c3d92066a";
+      device = "/dev/disk/by-uuid/dbcb9474-96b2-4049-8bd7-ce395a333cdc";
       preLVM = true;
       allowDiscards = true;
     };
@@ -101,7 +102,7 @@ in
 
       libinput = {
         enable = true;
-        disableWhileTyping = true;
+        #touchpad.disableWhileTyping = true;
       };
 
       layout = "pl"; 
@@ -142,7 +143,15 @@ in
     };
   };
 
-  security.sudo.wheelNeedsPassword = false;
+  security = {
+    sudo = {
+      enable = true;
+      wheelNeedsPassword = false;
+    };
+    doas = {
+      enable = false;
+    };
+  };
 
   users.users.${config.settings.username} = {
     isNormalUser = true;
@@ -155,7 +164,7 @@ in
 
   environment.systemPackages = with pkgs; [
     wget
-    neovim
+    #neovim
     git
     xdg_utils
   ];
