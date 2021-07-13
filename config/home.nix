@@ -15,31 +15,39 @@ in
     ./services
   ];
 
-  nixpkgs.config = import ../nixpkgs.nix;
+  programs.home-manager = {
+    enable = true;
+  };
 
   home = {
     packages = with pkgs; [
-      (import <nixos-unstable> {config.allowUnfree = true;})._1password
+      _1password
+      _1password-gui
       acpilight
       alacritty
-      discord
+      betterlockscreen
       docker-compose
       dunst
       feh
       ffmpeg
       firefox
       fzf
+      gimp
       imagemagick
       jq
+      kdeconnect
+      keepassxc
       killall
       lxappearance
       okular
+      openssl
       pavucontrol
       pv
       rofi
       tidal
       unzip
       xclip
+      watson
       zip
       zoom-us
     ];
