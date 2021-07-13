@@ -3,7 +3,6 @@
 {
   home.packages = with pkgs; [
     k9s
-    google-cloud-sdk
     kube-score
     kubectl
     kubectx
