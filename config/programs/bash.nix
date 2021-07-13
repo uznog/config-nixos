@@ -53,12 +53,12 @@ with pkgs.lib;
           -e 's/$/ /')
     LF_ICONS=''${LF_ICONS//$'\n'/:}
     export LF_ICONS
-    . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
     '';
     sessionVariables = {
       EDITOR = "nvim";
-      PAGER = "less";
-      MANPAGER = "less";
+      PAGER = "bat -p";
+      MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+      SYSTEMD_PAGER = "";
     };
     shellOptions = [
     "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
