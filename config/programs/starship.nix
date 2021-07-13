@@ -5,7 +5,6 @@ with pkgs.lib;
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
-    package = (import <nixos-unstable> {}).starship;
 
     settings = {
       add_newline = true;
