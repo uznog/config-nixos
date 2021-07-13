@@ -14,8 +14,12 @@
       vapoursynth = pkgs.vapoursynth.withPlugins (with pkgs; [
         vapoursynth-mvtools
       ]); 
-    }) { youtubeSupport = false; };
+    }) {
+      youtubeSupport = true;
+      scripts = with pkgs; [
+        mpvScripts.mpris
+      ];
+    };
   };
 
-  xdg.configFile."mpv".source = ../dotfiles/mpv;
 }
