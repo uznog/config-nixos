@@ -16,7 +16,7 @@
         max_icon_size = 64;
         min_icon_size = 64;
         frame_width = "3";
-        font = "Envy Code R 11";
+        font = "SauceCodePro Nerd Font 12";
         padding = 5;
         horizontal_padding = 5;
         text_icon_padding = 10;
