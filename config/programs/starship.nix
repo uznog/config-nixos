@@ -13,8 +13,19 @@ with pkgs.lib;
         error_symbol = "[\\$](bold red)";
         vicmd_symbol = "[V](bold green)";
       };
+
+      aws = {
+        disabled = false;
+        format = "on [$symbol$profile \\($region\\)]($style) ";
+        symbol = "";
+      };
+
+      gcloud = {
+        disabled = false;
+        format = "[$symbol$active \\($region\\)]($style) ";
+        symbol = " ";
+      };
     };
   };
 
-  #xdg.configFile."starship.toml".source = ../dotfiles/starship.toml;
 }
