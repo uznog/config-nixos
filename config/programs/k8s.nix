@@ -1,15 +1,12 @@
 { config, pkgs, ... }:
 
-let
-  unstable = import <nixos-unstable> {};
-in
-with pkgs.lib;
 {
-  home.packages = with unstable; [
+  home.packages = with pkgs; [
     k9s
     google-cloud-sdk
-    kubernetes-helm
-    kubectx
+    kube-score
     kubectl
+    kubectx
+    kubernetes-helm
   ];
 }
