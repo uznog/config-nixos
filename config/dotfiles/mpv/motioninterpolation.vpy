@@ -55,7 +55,7 @@ if not (mpix > 2.5 or clip.fps_num/clip.fps_den > 59):
         # see the description of these parameters in http://avisynth.org.ru/mvtools/mvtools2.html#functions
         analParams['search'] = 0
         blockParams['mode'] = 0
-        quality = 'low'
+        quality = 'high'
     else:
         quality = 'high'
 
