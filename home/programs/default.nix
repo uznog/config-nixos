@@ -13,7 +13,6 @@
     ./lf.nix
     ./neovim.nix
     ./mpv.nix
-    ./nix.nix
     ./starship.nix
     ./tmux.nix
     ./vscode.nix
