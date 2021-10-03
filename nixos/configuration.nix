@@ -1,12 +1,12 @@
 { config, pkgs, ... }:
 
-#let
+let
   #nixos-hardware = builtins.fetchGit {
     #url = "https://github.com/NixOS/nixos-hardware.git";
     #rev = "241d8300b2746c1db715eaf8d64748990cd0bb7a";
     #ref = "master";
   #};
-#in
+in
 {
   imports = [
       ../modules/settings.nix
@@ -16,10 +16,16 @@
       <home-manager/nixos>
   ];
 
-  nix.trustedUsers = [ "root" "@wheel" ];
+  nix = {
+    trustedUsers = [ "root" "@wheel" ];
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
   nixpkgs.config = import ../nixpkgs.nix;
 
-  home-manager.users.${config.settings.username} = import ../config/home.nix;
+  home-manager.users.${config.settings.username} = import ../home/home.nix;
   home-manager.useGlobalPkgs = true;
 
   boot.loader = {
@@ -30,7 +36,15 @@
       device = "nodev";
       efiSupport = true;
       gfxmodeEfi = "1024x768";
-      useOSProber = true;
+      useOSProber = false;
+      extraEntries = ''
+        menuentry "Windows 10" {
+          insmod part_gpt
+          insmod fat
+          search --fs-uuid --set=root 2E0A-0011
+          chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+        }
+      '';
     };
 
     efi = {
@@ -53,36 +67,51 @@
     enable = true;
     mediaKeys.enable = true;
   };
-  hardware.pulseaudio.enable = true;
-  hardware.bluetooth.enable = true;
 
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+    extraConfig = ''
+      load-module module-switch-on-connect
+    '';
+    extraModules = [ pkgs.pulseaudio-modules-bt ];
+  };
+
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        Enable="Source,Sink,Media,Socket";
+      };
+    };
+  };
 
   networking = {
     hostName = "nixos";
     useDHCP = false;
+    hostFiles = [ "${../../config-sensitive/hosts}" ];
 
-    interfaces.wlp0s20f3.useDHCP = true;
+    firewall = {
+      enable = false;
+      # KDE Connect required ports
+      allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
+      allowedUDPPortRanges = [{ from = 1714; to = 1764; }];
+    };
 
     networkmanager = {
       enable = true;
-      dns = "dnsmasq";
       enableStrongSwan = true;
       packages = with pkgs; [
-        networkmanager_l2tp
+        networkmanager-l2tp
       ];
     };
   };
 
-  environment.etc = {
-    "${config.settings.username}-hosts".source = ../../config-sensitive/hosts;
-    "NetworkManager/dnsmasq.d/dns.conf".text = "addn-hosts=/etc/${config.settings.username}-hosts";
-  };
-
-  programs.nm-applet.enable = true;
-
   console.useXkbConfig = true;
 
   services = {
+    cron.enable = true;
+
     openssh.enable = true;
 
     blueman.enable = true;
@@ -96,13 +125,14 @@
 
     tlp.enable = true;
 
+    k3s.enable = false;
+
     xserver = {
       enable = true;
       autorun = true;
 
       libinput = {
         enable = true;
-        #touchpad.disableWhileTyping = true;
       };
 
       layout = "pl"; 
@@ -110,6 +140,7 @@
 
       desktopManager = {
         xterm.enable = false;
+        plasma5.enable = true;
       };
 
       displayManager = {
@@ -117,7 +148,7 @@
           enable = true;
           user = "${config.settings.username}";
         };
-        defaultSession = "none+i3";
+        #defaultSession = "none+i3";
       };
 
       windowManager.bspwm = {
@@ -125,7 +156,7 @@
       };
 
       windowManager.i3 = {
-        enable = true;
+        enable = false;
         package = pkgs.i3-gaps;
       };
     };
@@ -136,6 +167,8 @@
       enable = true;
       enableOnBoot = false;
     };
+
+    containerd.enable = true;
 
     libvirtd = {
       enable = true;
@@ -162,24 +195,25 @@
     shell = pkgs.bash;
   };
 
-  environment.systemPackages = with pkgs; [
-    wget
-    #neovim
-    git
-    xdg_utils
-  ];
+  environment = {
 
-  environment.loginShellInit = ''
-	if [ -e $HOME/.profile ]
-	then
-		. $HOME/.profile
-	fi
-  '';
+    systemPackages = with pkgs; [
+      wget
+      git
+      xdg_utils
+    ];
+
+    loginShellInit = ''
+      if [ -e $HOME/.profile ]
+      then
+        . $HOME/.profile
+      fi
+    '';
+  };
 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
   ];
 
-
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.11";
 }
