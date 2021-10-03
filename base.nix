@@ -2,9 +2,9 @@
 
 {
   imports = [
-    nixos/configuration.nix
-    nixos/hardware-configuration.nix
-    modules/settings.nix
+    ./nixos/configuration.nix
+    ./nixos/hardware-configuration.nix
+    ./modules/settings.nix
   ];
 
   nixpkgs.config = import ./nixpkgs.nix;

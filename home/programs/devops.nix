@@ -6,9 +6,14 @@
     awscli2
     dbeaver
     dig
+    dive
+    du-dust
     google-cloud-sdk
     httpie
     oracle-instantclient
+    ripgrep
+    ripgrep-all
+    sshfs
     terraform_0_15
     vagrant
     virt-manager

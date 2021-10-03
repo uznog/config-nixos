@@ -1,16 +1,13 @@
 { config, pkgs, ... }:
 
 let
-  tidal = pkgs.writeScriptBin "tidal" ''
-    #!${pkgs.stdenv.shell}
-    ${pkgs.chromium}/bin/chromium --app="https://listen.tidal.com"
-  '';
+  customPkgs = import ../pkgs;
 in
-{
-  imports = [
-    ../modules/settings.nix
-    ./dev
-    ./wm
+  {
+    imports = [
+      ../modules/settings.nix
+      ./dev
+    #./wm
     ./programs
     ./services
   ];
@@ -27,7 +24,6 @@ in
       alacritty
       betterlockscreen
       docker-compose
-      dunst
       feh
       ffmpeg
       firefox
@@ -44,20 +40,21 @@ in
       pavucontrol
       pv
       rofi
-      tidal
       unzip
       xclip
       watson
       zip
       zoom-us
-    ];
+    ]
+    ++ customPkgs;
+
     sessionPath = [
       "~/bin"
     ];
     sessionVariables = {
       EDITOR = "nvim";
-      PAGER = "less";
-      MANPAGER = "less";
+      PAGER = "bat";
+      MANPAGER = "bat";
       BROWSER = "firefox";
     };
   };

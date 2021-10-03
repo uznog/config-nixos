@@ -18,11 +18,13 @@ in
     enable = true;
     extensions = with pkgs.vscode-extensions; [
       arcticicestudio.nord-visual-studio-code
-      bbenoist.Nix
-      golang.Go
+      bbenoist.nix
+      eamodio.gitlens
+      golang.go
       hashicorp.terraform
       ms-kubernetes-tools.vscode-kubernetes-tools
-      ms-python.python
+      #ms-python.python
+      ms-vscode-remote.remote-ssh
       vscodevim.vim
     ];
     keybindings = [
