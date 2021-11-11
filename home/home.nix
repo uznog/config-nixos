@@ -5,7 +5,6 @@ let
 in
   {
     imports = [
-      ../modules/settings.nix
       ./dev
     #./wm
     ./programs
@@ -23,12 +22,14 @@ in
       acpilight
       alacritty
       betterlockscreen
+      chromium
       docker-compose
       feh
       ffmpeg
       firefox
       fzf
       gimp
+      htop
       imagemagick
       jq
       kdeconnect
@@ -38,6 +39,7 @@ in
       okular
       openssl
       pavucontrol
+      postman
       pv
       rofi
       unzip
@@ -49,8 +51,10 @@ in
     ++ customPkgs;
 
     sessionPath = [
-      "~/bin"
+      "$HOME/bin"
+      "$HOME/src/go/bin"
     ];
+
     sessionVariables = {
       EDITOR = "nvim";
       PAGER = "bat";
