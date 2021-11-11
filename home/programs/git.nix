@@ -25,17 +25,17 @@ with pkgs.lib;
 
     includes = [
       {
-        condition = "gitdir:~/src/snowdog/";
+        condition = "gitdir:**";
         contents = {
-          user = { name = "Konrad Baran"; email = "konrad.baran@snow.dog"; };
+          user = { name = "Konrad Baran"; email = "konrad.baran224@gmail.com"; };
           commit.gpgSign = true;
           tag.gpgSign = true;
         };
       }
       {
-        condition = "gitdir:**";
+        condition = "gitdir:~/src/snowdog/";
         contents = {
-          user = { name = "Konrad Baran"; email = "konrad.baran224@gmail.com"; };
+          user = { name = "Konrad Baran"; email = "konrad.baran@snow.dog"; };
           commit.gpgSign = true;
           tag.gpgSign = true;
         };
