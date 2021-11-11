@@ -1,15 +1,17 @@
 { config, pkgs, ... }:
 
-with pkgs.lib;
+let
+  settings = (import <nixpkgs/nixos> {}).config.settings;
+in
 {
   programs.bash = {
     enable = true;
-    historyFile = "\$HOME/.config/bash/.bash_history";
+    historyFile = "${settings.user.homeDir}/.bash_history";
     shellAliases = {
       "ll" = "ls -al";
       "ns" = "nix-shell --command bash";
       "hm" = "home-manager -f $HOME/etc/config-nixos/config/home.nix";
-      "nr" = "sudo nixos-rebuild -I nixos-config=$HOME/etc/config-nixos/nixos/configuration.nix";
+      "nr" = "sudo nixos-rebuild";
       "gl" = "git log --oneline --graph";
       "ga" = "git add";
       "gc" = "git commit -m";
@@ -53,6 +55,7 @@ with pkgs.lib;
           -e 's/$/ /')
     LF_ICONS=''${LF_ICONS//$'\n'/:}
     export LF_ICONS
+    source <(${pkgs.kube3d}/bin/k3d completion bash)
     '';
     sessionVariables = {
       EDITOR = "nvim";
