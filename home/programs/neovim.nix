@@ -146,6 +146,7 @@
       set fillchars+=vert:\ 
       let base16colorspace=256  
       set undofile
+      set noswapfile
     '';
   };
 
