@@ -25,6 +25,10 @@ with pkgs.lib;
         format = "[$symbol$active \\($region\\)]($style) ";
         symbol = " ";
       };
+
+      kubernetes = {
+        disabled = false;
+      };
     };
   };
 
