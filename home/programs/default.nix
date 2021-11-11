@@ -9,6 +9,7 @@
     ./devops.nix
     ./direnv.nix
     ./git.nix
+    ./gpg.nix
     ./k8s.nix
     ./lf.nix
     ./neovim.nix
