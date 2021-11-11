@@ -4,7 +4,7 @@
 
   home.packages = with pkgs; [
     syncplay
-    youtube-dl
+    yt-dlp
   ];
 
   programs.mpv = {
