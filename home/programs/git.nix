@@ -4,8 +4,8 @@ with pkgs.lib;
 {
   programs.git = {
     enable = true;
-    userName = config.settings.name;
-    userEmail = "konrad.baran@snow.dog";
+    userName = "uznog";
+    userEmail = "konrad.baran224@gmail.com";
     aliases = {
       gss = "status -s -uno";
       gl = "log --oneline --graph";
@@ -20,6 +20,26 @@ with pkgs.lib;
     extraConfig = {
       branch.autosetuprebase = "never";
       push.default = "simple";
+      init.defaultBranch = "master";
     };
+
+    includes = [
+      {
+        condition = "gitdir:~/src/snowdog/";
+        contents = {
+          user = { name = "Konrad Baran"; email = "konrad.baran@snow.dog"; };
+          commit.gpgSign = true;
+          tag.gpgSign = true;
+        };
+      }
+      {
+        condition = "gitdir:**";
+        contents = {
+          user = { name = "Konrad Baran"; email = "konrad.baran224@gmail.com"; };
+          commit.gpgSign = true;
+          tag.gpgSign = true;
+        };
+      }
+    ];
   };
 }
