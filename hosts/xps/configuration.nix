@@ -1,31 +1,15 @@
 { config, pkgs, ... }:
 
-let
-  #nixos-hardware = builtins.fetchGit {
-    #url = "https://github.com/NixOS/nixos-hardware.git";
-    #rev = "241d8300b2746c1db715eaf8d64748990cd0bb7a";
-    #ref = "master";
-  #};
-in
 {
   imports = [
-      ../modules/settings.nix
-      ./hardware-configuration.nix
-      #(import "${nixos-hardware}/dell/xps/15-9500/nvidia")
-      <nixos-hardware/dell/xps/15-9500/nvidia>
-      <home-manager/nixos>
+    ./settings.nix
+    ./hardware-configuration.nix
+    <nixos-hardware/dell/xps/15-9500/nvidia>
+    <home-manager/nixos>
   ];
 
-  nix = {
-    trustedUsers = [ "root" "@wheel" ];
-    package = pkgs.nixUnstable;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-  nixpkgs.config = import ../nixpkgs.nix;
 
-  home-manager.users.${config.settings.username} = import ../home/home.nix;
+  home-manager.users.${config.settings.user.name} = import ../home/home.nix;
   home-manager.useGlobalPkgs = true;
 
   boot.loader = {
@@ -60,6 +44,14 @@ in
       allowDiscards = true;
     };
   };
+
+  boot.binfmt = {
+    emulatedSystems = [
+      "aarch64-linux"
+    ];
+  };
+
+  boot.supportedFilesystems = [ "ntfs" ];
   
   time.timeZone = "Europe/Warsaw";
 
@@ -89,7 +81,7 @@ in
   networking = {
     hostName = "nixos";
     useDHCP = false;
-    hostFiles = [ "${../../config-sensitive/hosts}" ];
+    hostFiles = [ "${/. + config.settings.host.hostsFile}" ];
 
     firewall = {
       enable = false;
@@ -146,9 +138,8 @@ in
       displayManager = {
         autoLogin = {
           enable = true;
-          user = "${config.settings.username}";
+          user = "${config.settings.user.name}";
         };
-        #defaultSession = "none+i3";
       };
 
       windowManager.bspwm = {
@@ -166,6 +157,7 @@ in
     docker = {
       enable = true;
       enableOnBoot = false;
+      liveRestore = false;
     };
 
     containerd.enable = true;
@@ -173,6 +165,13 @@ in
     libvirtd = {
       enable = true;
       onBoot = "ignore";
+      qemu = {
+        runAsRoot = false;
+        ovmf = {
+          enable = true;
+          package = pkgs.OVMFFull;
+        };
+      };
     };
   };
 
@@ -186,10 +185,10 @@ in
     };
   };
 
-  users.users.${config.settings.username} = {
+  users.users.${config.settings.user.name} = {
     isNormalUser = true;
-    home = "/home/${config.settings.username}";
-    description = "${config.settings.name}";
+    home = config.settings.user.homeDir;
+    description = config.settings.user.fullname;
     extraGroups = [ "wheel" "networkmanager" "docker" "audio" "libvirtd" ];
     uid = 1000;
     shell = pkgs.bash;
