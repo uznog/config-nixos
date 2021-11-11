@@ -8,4 +8,8 @@
       theme = "Nord";
     };
   };
+
+  home.packages = with pkgs; [
+    bat-extras.batman
+  ];
 }
