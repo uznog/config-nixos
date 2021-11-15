@@ -1,11 +1,11 @@
-{ config, pkgs, ... }:
+{ config, nixosConfig, pkgs, ... }:
 
 with pkgs.lib;
 {
   programs.git = {
     enable = true;
     userName = "uznog";
-    userEmail = "konrad.baran224@gmail.com";
+    userEmail = nixosConfig.settings.user.email;
     aliases = {
       gss = "status -s -uno";
       gl = "log --oneline --graph";
@@ -24,18 +24,20 @@ with pkgs.lib;
     };
 
     includes = [
+      # Personal
       {
         condition = "gitdir:**";
         contents = {
-          user = { name = "Konrad Baran"; email = "konrad.baran224@gmail.com"; };
+          user = { name = nixosConfig.settings.user.fullname; email = nixosConfig.settings.user.email; };
           commit.gpgSign = true;
           tag.gpgSign = true;
         };
       }
+      # Work
       {
         condition = "gitdir:~/src/snowdog/";
         contents = {
-          user = { name = "Konrad Baran"; email = "konrad.baran@snow.dog"; };
+          user = { name = nixosConfig.settings.user.fullname; email = "konrad.baran@snow.dog"; };
           commit.gpgSign = true;
           tag.gpgSign = true;
         };

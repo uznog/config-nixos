@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, nixosConfig, pkgs, ... }:
 
 let
   settings = (import <nixpkgs/nixos> {}).config.settings;
@@ -6,11 +6,10 @@ in
 {
   programs.bash = {
     enable = true;
-    historyFile = "${settings.user.homeDir}/.bash_history";
+    historyFile = "${nixosConfig.settings.user.homeDir}/.bash_history";
     shellAliases = {
       "ll" = "ls -al";
       "ns" = "nix-shell --command bash";
-      "hm" = "home-manager -f $HOME/etc/config-nixos/config/home.nix";
       "nr" = "sudo nixos-rebuild";
       "gl" = "git log --oneline --graph";
       "ga" = "git add";
