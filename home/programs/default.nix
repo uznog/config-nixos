@@ -1,8 +1,6 @@
-{ ... }:
-
 {
   imports = [
-    #./autorandr.nix
+    ./alacritty.nix
     ./bash.nix
     ./bat.nix
     ./communication.nix
