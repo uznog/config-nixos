@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   programs.gpg = {
@@ -14,7 +14,8 @@
       write-env-file
       debug-level advanced
       keep-display
+      default-cache-ttl 30000
+      max-cache-ttl 30000
     '';
   };
-
 }

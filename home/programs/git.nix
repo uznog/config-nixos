@@ -1,6 +1,5 @@
-{ config, nixosConfig, pkgs, ... }:
+{ nixosConfig, ... }:
 
-with pkgs.lib;
 {
   programs.git = {
     enable = true;
