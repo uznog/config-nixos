@@ -63,5 +63,5 @@ in
     };
   };
 
-  xdg.configFile."alacritty/alacritty.yml".source = ./dotfiles/alacritty.yml;
+  home.enableNixpkgsReleaseCheck = false;
 }
