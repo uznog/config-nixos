@@ -45,35 +45,6 @@ with lib;
       };
     };
 
-    services = {
-      grafana = {
-        enable = mkOption {
-          type = types.bool;
-          default = true;
-          example = false;
-          description = "True if Grafana is to be enabled locally";
-        };
-      };
-
-      prometheus = {
-        enable = mkOption {
-          type = types.bool;
-          default = true;
-          example = false;
-          description = "True if Prometheus is to be enabled locally";
-        };
-      };
-
-      traefik = {
-        enable = mkOption {
-          type = types.bool;
-          default = true;
-          example = false;
-          description = "True if Traefik is to be enabled locally";
-        };
-      };
-    };
-
     terminal = mkOption {
       type = with types; uniq str;
       default = "alacritty";
