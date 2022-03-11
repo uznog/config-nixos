@@ -1,6 +1,34 @@
-{ config, pkgs, ... }:
+{ pkgs, dotfiles, ... }:
 
-with pkgs.lib;
+let
+  lfcd = pkgs.writeScriptBin "lfcd" ''
+    #!${pkgs.stdenv.shell}
+    
+    tmp="$(mktemp)"
+    fid="$(mktemp)"
+    ${pkgs.lf}/bin/lf -command '$printf $id > '"$fid"'\' -last-dir-path="$tmp" "$@"
+    id="$(cat "$fid")"
+    archivemount_dir="/tmp/__lf_archivemount_$id"
+
+    if [ -f "$archivemount_dir" ]; then
+        cat "$archivemount_dir" | \
+            while read -r line; do
+                sudo umount "$line"
+                rmdir "$line"
+            done
+        rm -f "$archivemount_dir"
+    fi
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            if [ "$dir" != "$(pwd)" ]; then
+                cd "$dir"
+            fi
+        fi
+    fi
+  '';
+in
 {
   home.packages = with pkgs; [
     atool
@@ -10,9 +38,11 @@ with pkgs.lib;
     highlight
     mediainfo
     trash-cli
+
+    lfcd
   ];
 
-  xdg.configFile."diricons".source = ../dotfiles/lf-icons;
+  xdg.configFile."diricons".source = "${dotfiles}/lf/diricons";
 
   programs.lf = {
     enable = true;
@@ -236,7 +266,7 @@ with pkgs.lib;
     };
     previewer = {
       keybinding = null;
-      source = ../dotfiles/lf-previewer.sh;
+      source = "${dotfiles}/lf/previewer.sh";
     };
     settings = {
       hidden = true;
@@ -248,4 +278,5 @@ with pkgs.lib;
       scrolloff = 5;
     };
   };
+
 }
