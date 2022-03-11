@@ -6,8 +6,6 @@ inputs@{ config, pkgs, ... }:
     ./hardware-configuration.nix
   ];
 
-  documentation.nixos.enable = true;
-
   boot.loader = {
     grub = {
       enable = true;
@@ -100,7 +98,7 @@ inputs@{ config, pkgs, ... }:
   };
 
   networking = {
-    hostName = "nixos";
+    hostName = "xps";
     useDHCP = false;
     hostFiles = [ "${inputs.sensitive}/hosts" ];
 
@@ -122,7 +120,18 @@ inputs@{ config, pkgs, ... }:
 
   console.useXkbConfig = true;
 
-  programs.ssh.ciphers = [ "aes128-cbc" "3des-cbc" "aes192-cbc" "aes256-cbc" "chacha20-poly1305@openssh.com" "aes128-ctr" "aes192-ctr" "aes256-ctr" "aes128-gcm@openssh.com" "aes256-gcm@openssh.com" ];
+  programs.ssh.ciphers = [
+    "aes128-cbc"
+    "3des-cbc"
+    "aes192-cbc"
+    "aes256-cbc"
+    "chacha20-poly1305@openssh.com"
+    "aes128-ctr"
+    "aes192-ctr"
+    "aes256-ctr"
+    "aes128-gcm@openssh.com"
+    "aes256-gcm@openssh.com"
+  ];
 
   services = {
     cron.enable = true;
@@ -144,8 +153,6 @@ inputs@{ config, pkgs, ... }:
     };
 
     tlp.enable = true;
-
-    #thermald.configFile = ./thermal-conf.xml;
 
     xserver = {
       enable = true;
@@ -178,14 +185,6 @@ inputs@{ config, pkgs, ... }:
         };
       };
 
-      windowManager.bspwm = {
-        enable = false;
-      };
-
-      windowManager.i3 = {
-        enable = false;
-        package = pkgs.i3-gaps;
-      };
     };
   };
 
@@ -252,6 +251,9 @@ inputs@{ config, pkgs, ... }:
       wget
       git
       xdg_utils
+      man-pages
+      man-pages-posix
+      man-db
     ];
 
     loginShellInit = ''
