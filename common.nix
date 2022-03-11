@@ -1,17 +1,24 @@
-{ pkgs, ... }:
+inputs@{ pkgs, ... }:
 
 {
+  #imports = [
+    #./services
+  #];
+
   nix = {
-    trustedUsers = [ "root" "@wheel" ];
-    package = pkgs.nixUnstable;
+    settings = {
+      trusted-users = [ "root" "@wheel" ];
+    };
+    package = pkgs.nix_2_4;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowBroken = false;
-    tarball-ttl = 604800;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowBroken = false;
+    };
   };
 }
