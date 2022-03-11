@@ -64,6 +64,7 @@ in
         "window.menuBarVisibility" = "toggle";
         "workbench.tree.indent" = 16;
         "[nix]"."editor.tabSize" = 2;
+        "nix.enableLanguageServer" = true;
         "[go]"."editor.tabSize" = 2;
         "vim.useSystemClipboard" = true;
     };
