@@ -1,10 +1,6 @@
-inputs@{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
-  #imports = [
-    #./services
-  #];
-
   nix = {
     settings = {
       trusted-users = [ "root" "@wheel" ];
