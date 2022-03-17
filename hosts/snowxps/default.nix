@@ -127,7 +127,6 @@ inputs@{ config, pkgs, ... }:
   home-manager = {
     users.${config.settings.user.name} = import ../../home/home.nix;
     extraSpecialArgs = {
-      # inputs from line1 will be available as `args` in home.nix
       inherit (inputs) dotfiles;
     };
   };
@@ -135,12 +134,9 @@ inputs@{ config, pkgs, ... }:
   environment = {
 
     systemPackages = with pkgs; [
-      wget
       git
       xdg_utils
-      man-pages
-      man-pages-posix
-      man-db
+      wget
     ];
 
     loginShellInit = ''
