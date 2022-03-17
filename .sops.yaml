@@ -1,0 +1,18 @@
+keys:
+  - &kbaran age1ah3k025shqwmtusdcmxzh3709tjykqt9u90y0t238k042ka5cvqq63z633
+
+creation_rules:
+  - path_regex: secrets/hosts
+    key_groups:
+    - age:
+      - *kbaran
+
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+    - age:
+      - *kbaran
+
+  - path_regex: secrets/certs/*
+    key_groups:
+    - age:
+      - *kbaran
