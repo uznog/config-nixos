@@ -36,7 +36,6 @@
 
     supportedSystems = [ "x86_64-linux" ];
 
-
     channelsConfig = {
       allowUnfree = true;
     };
