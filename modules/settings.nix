@@ -31,38 +31,36 @@ with lib;
     };
 
     host = {
-      isVirtual = mkOption {
+      isVM = mkOption {
         type = types.bool;
         default = false;
         example = true;
         description = "True if host is a virtual machine";
-      };
-
-      hostsFile = mkOption {
-        type = types.path;
-        default = config.settings.user.homeDir + "/etc/config-sensitive/hosts";
-        description = "Path to file containing hosts in /etc/hosts manner to be used";
       };
     };
 
     terminal = mkOption {
       type = with types; uniq str;
       default = "alacritty";
+      description = "Terminal emulator to be used";
     };
 
     fontName = mkOption {
       type = types.str;
       default = "SauceCodePro Nerd Font";
+      description = "Font name used in terminal";
     };
 
     fontSize = mkOption {
       type = types.int;
       default = 12;
+      description = "Font size used in terminal";
     };
 
     kbLayout = mkOption {
       type = types.str;
       default = "pl";
+      description = "kb layout to use";
     };
 
     xkbFile = mkOption {
