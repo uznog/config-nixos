@@ -78,6 +78,14 @@ in
           fi
         }}
       '';
+      checkSops = ''&{{
+        if ${pkgs.yq}/bin/yq .sops.version $1 &> /dev/null; then
+          ${pkgs.sops}/bin/sops $1
+        else
+          nvim $1
+        fi
+        }}
+      '';
       compress = ''''${{
           [ -z "$1" ] && exit 1
           ''${EXT:="''${2:-tar.gz}"}
@@ -241,7 +249,7 @@ in
       dD = "$trash $f";
       dR = "delete";
       P = "put-progress";
-      e = ''$set -f;  ''${EDITOR} $f'';
+      e = ''$sops $f || vim $f'';
       i = ''$bat --style full $f'';
       w = "$$SHELL";
       x = "$$f";
