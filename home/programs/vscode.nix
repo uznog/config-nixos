@@ -1,12 +1,12 @@
 { pkgs, lib, ... }:
 
 let
-  arcticicestudio.nord-visual-studio-code = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+  amazonwebservices.aws-toolkit-vscode = pkgs.vscode-utils.buildVscodeMarketplaceExtension {
     mktplcRef = {
-      name = "nord-visual-studio-code";
-      publisher = "arcticicestudio";
-      version = "0.15.1";
-      sha256 = "0lc50jkwxq3vffpwlkqdnkq77c7gbpfn1lk9l0n9qxsyfyhb68qj";
+      name = "aws-toolkit-vscode";
+      publisher = "AmazonWebServices";
+      version = "1.36.0";
+      sha256 = "sha256-6Ylti3x+XZAzE+sb7s7p+nepvqwer+9qbuHlp+1H+UQ=";
     };
     meta = {
       license = lib.licenses.mit;
@@ -18,13 +18,14 @@ in
     enable = true;
     extensions = with pkgs.vscode-extensions; [
       arcticicestudio.nord-visual-studio-code
+      amazonwebservices.aws-toolkit-vscode
       bbenoist.nix
       eamodio.gitlens
       golang.go
       hashicorp.terraform
       ms-kubernetes-tools.vscode-kubernetes-tools
-      #ms-python.python
       ms-vscode-remote.remote-ssh
+      redhat.vscode-yaml
       vscodevim.vim
     ];
     keybindings = [
@@ -67,6 +68,37 @@ in
         "nix.enableLanguageServer" = true;
         "[go]"."editor.tabSize" = 2;
         "vim.useSystemClipboard" = true;
+        "json.schemas" = [];
+        "yaml.customTags" = [
+          "!And"
+          "!And sequence"
+          "!If"
+          "!If sequence"
+          "!Not"
+          "!Not sequence"
+          "!Equals"
+          "!Equals sequence"
+          "!Or"
+          "!Or sequence"
+          "!FindInMap"
+          "!FindInMap sequence"
+          "!Base64"
+          "!Join"
+          "!Join sequence"
+          "!Cidr"
+          "!Ref"
+          "!Sub"
+          "!Sub sequence"
+          "!GetAtt"
+          "!GetAZs"
+          "!ImportValue"
+          "!ImportValue sequence"
+          "!Select"
+          "!Select sequence"
+          "!Split"
+          "!Split sequence"
+        ];
+        "aws.profile" = "profile:default";
     };
   };
 }
