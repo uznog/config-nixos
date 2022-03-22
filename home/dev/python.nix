@@ -4,6 +4,7 @@ with pkgs;
 let
   pythonPkgs = pythonPackages: with pythonPackages; [
     requests
+    ec2instanceconnectcli 
   ];
 in
 {
