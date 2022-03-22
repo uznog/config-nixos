@@ -1,7 +1,8 @@
 {
   inputs = {
-    # nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable-small;
-    nixpkgs.url = github:NixOS/nixpkgs/fcd48a5a0693f016a5c370460d0c2a8243b882dc;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+
+    nixpkgs-pin.url = github:NixOS/nixpkgs/fcd48a5a0693f016a5c370460d0c2a8243b882dc;
 
     nixos-stable.url = github:NixOS/nixpkgs/nixos-21.11;
     nixos-hardware.url = github:NixOS/nixos-hardware;
@@ -20,11 +21,13 @@
   outputs = inputs@
   { self
   , utils
-  , nixpkgs, nixos-hardware, home-manager
+  , nixpkgs, nixpkgs-pin, nixos-hardware, home-manager
   , sops-nix, dotfiles, ... }:
 
   let
     inherit (utils.lib) mkFlake exportModules;
+    system = "x86_64-linux";
+    pinned-pkgs = nixpkgs-pin.legacyPackages.x86_64-linux;
   in
   mkFlake rec {
     inherit self inputs;
@@ -34,7 +37,7 @@
       generateRegistryFromInputs = true;
     };
 
-    supportedSystems = [ "x86_64-linux" ];
+    supportedSystems = [ system ];
 
     channelsConfig = {
       allowUnfree = true;
@@ -58,12 +61,12 @@
 
     hosts = {
       snowxps = {
-        system = "x86_64-linux";
+        inherit system;
         modules = [
           ./hosts/snowxps
           nixos-hardware.nixosModules.dell-xps-15-9500-nvidia
         ];
-        specialArgs = { inherit inputs dotfiles; };
+        specialArgs = { inherit inputs pinned-pkgs dotfiles; };
       };
     };
 
