@@ -1,6 +1,8 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
+  environment.systemPackages = with pkgs; [ xclip kdeconnect ];
+
   services.xserver = {
     enable = true;
     autorun = true;
