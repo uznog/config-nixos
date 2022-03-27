@@ -5,5 +5,6 @@
     discord
     ferdi
     signal-desktop
+    zoom-us
   ];
 }
