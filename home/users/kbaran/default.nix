@@ -25,7 +25,6 @@ inputs@{ config, pkgs, ... }:
       acpilight
       betterlockscreen
       chromium
-      docker-compose
       feh
       ffmpeg
       firefox
@@ -34,7 +33,6 @@ inputs@{ config, pkgs, ... }:
       htop
       imagemagick
       jq
-      kdeconnect
       keepassxc
       killall
       lxappearance
@@ -45,11 +43,9 @@ inputs@{ config, pkgs, ... }:
       pv
       rofi
       unzip
-      xclip
       watson
       yq
       zip
-      zoom-us
     ];
 
     sessionPath = [
