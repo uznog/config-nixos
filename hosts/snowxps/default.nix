@@ -1,17 +1,21 @@
 inputs@{ config, pkgs, ... }:
 
+let
+  username = config.settings.user.name;
+in
 {
   imports = [
     ./settings.nix
     ./hardware-configuration.nix
 
+    ../../modules/services/docker.nix
+    ../../modules/services/grafana.nix
+    ../../modules/services/libvirtd.nix
+    ../../modules/services/minio.nix
+    ../../modules/services/pipewire.nix
+    ../../modules/services/prometheus.nix
     ../../modules/services/ssh.nix
     ../../modules/services/strongswan.nix
-    ../../modules/services/pipewire.nix
-    ../../modules/services/docker.nix
-    ../../modules/services/libvirtd.nix
-    ../../modules/services/grafana.nix
-    ../../modules/services/prometheus.nix
     ../../modules/services/traefik.nix
 
     ../../modules/desktop/kde.nix
@@ -40,6 +44,7 @@ inputs@{ config, pkgs, ... }:
       efiSysMountPoint = "/boot/efi";
     };
   };
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
 
   boot.initrd.luks.devices = {
@@ -88,16 +93,7 @@ inputs@{ config, pkgs, ... }:
 
   services = {
     blueman.enable = true;
-
-    minio = {
-      enable = true;
-      listenAddress = ":9000";
-      consoleAddress = ":9001";
-      rootCredentialsFile = "${config.settings.user.homeDir}/etc/config-sensitive/minio/credentials";
-    };
-
     tlp.enable = true;
-
   };
 
   programs.atop = {
@@ -115,7 +111,7 @@ inputs@{ config, pkgs, ... }:
   };
 
 
-  users.users.${config.settings.user.name} = {
+  users.users.${username} = {
     isNormalUser = true;
     home = config.settings.user.homeDir;
     description = config.settings.user.fullname;
@@ -125,26 +121,18 @@ inputs@{ config, pkgs, ... }:
   };
 
   home-manager = {
-    users.${config.settings.user.name} = import ../../home/home.nix;
+    users.${username} = import ../../home/users/${username};
     extraSpecialArgs = {
       inherit (inputs) dotfiles;
     };
   };
 
   environment = {
-
     systemPackages = with pkgs; [
       git
       xdg_utils
       wget
     ];
-
-    loginShellInit = ''
-      if [ -e $HOME/.profile ]
-      then
-        . $HOME/.profile
-      fi
-    '';
   };
 
   fonts.fonts = with pkgs; [
