@@ -47,6 +47,7 @@ inputs@{ config, pkgs, ... }:
       unzip
       xclip
       watson
+      yq
       zip
       zoom-us
     ];

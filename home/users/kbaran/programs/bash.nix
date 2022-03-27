@@ -19,7 +19,7 @@ let
     complete -C ${pkgs.minio-client}/bin/mc mc
   '';
 
-  mcComplete = ''
+  mcCompletion = ''
     source <(${pkgs.kind}/bin/kind completion bash)
   '';
 in
@@ -48,7 +48,7 @@ in
     ''
     + lfBind + lfIcons
     + kindCompletion
-    + mcComplete;
+    + mcCompletion;
 
     sessionVariables = {
       EDITOR = "nvim";
