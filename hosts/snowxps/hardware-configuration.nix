@@ -31,6 +31,7 @@
     enable = true;
     cpuFreqGovernor = "ondemand";
   };
+
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
 }
