@@ -1,10 +1,11 @@
 DIFF_FILE := /tmp/nix-diff
 
+# Update flakes
 update:
 	@echo -e "\033[36m==> Updating flakes \033[0m"
 	@nix flake update 
 
-# Update and build flake, but only 
+# Update and build flake to compare versions of packages 
 diff: update
 	@echo -e "\033[36m==> Building future configuration \033[0m"
 	@sudo nixos-rebuild build
@@ -19,6 +20,7 @@ diff: update
 	@rm ${DIFF_FILE}
 
 
+# Switch the configuration
 switch:
 	@echo -e "\033[36m==> Switching configuration with nixos-rebuild \033[0m"
 	@sudo nixos-rebuild switch
