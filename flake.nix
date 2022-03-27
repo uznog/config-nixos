@@ -5,7 +5,10 @@
     nixpkgs-pin.url = github:NixOS/nixpkgs/fcd48a5a0693f016a5c370460d0c2a8243b882dc;
 
     nixos-stable.url = github:NixOS/nixpkgs/nixos-21.11;
-    nixos-hardware.url = github:NixOS/nixos-hardware;
+
+    # https://github.com/NixOS/nixos-hardware/issues/388
+    # nixos-hardware.url = github:NixOS/nixos-hardware;
+    nixos-hardware.url = github:bbigras/nixos-hardware/intel-gpu;
 
     utils.url = github:gytis-ivaskevicius/flake-utils-plus/v1.3.1;
 
@@ -50,9 +53,11 @@
     ];
 
     hostDefaults.modules = [
-      home-manager.nixosModules.home-manager
-      { home-manager.useGlobalPkgs = true; }
       sops-nix.nixosModules.sops
+      home-manager.nixosModules.home-manager
+      { 
+        home-manager.useGlobalPkgs = true; 
+      }
 
       ./common.nix
       ./modules/settings.nix
@@ -63,8 +68,8 @@
       snowxps = {
         inherit system;
         modules = [
-          ./hosts/snowxps
           nixos-hardware.nixosModules.dell-xps-15-9500-nvidia
+          ./hosts/snowxps
         ];
         specialArgs = { inherit inputs pinned-pkgs dotfiles; };
       };
